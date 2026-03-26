@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Build artifacts
+*.o
+*.a
+*.so
+build/
+dist/
+
+# ML model files
+models/
+
+# Generated reports
+reports/
+
+# Jupyter checkpoint files
+.ipynb_checkpoints/
+
+# Editor/OS files
+.DS_Store
+*.swp
