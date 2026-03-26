@@ -23,7 +23,6 @@ Example — real-time mode::
 
 from __future__ import annotations
 
-import hashlib
 import logging
 import os
 import time
@@ -59,8 +58,7 @@ class _PredictionCache:
 
     def _key(self, features: FlowFeatures) -> str:
         fk = features.flow_key
-        raw = f"{fk.src_ip}:{fk.src_port}-{fk.dst_ip}:{fk.dst_port}-{fk.protocol}"
-        return hashlib.md5(raw.encode()).hexdigest()  # noqa: S324 (non-crypto use)
+        return f"{fk.src_ip}:{fk.src_port}-{fk.dst_ip}:{fk.dst_port}-{fk.protocol}"
 
     def get(self, features: FlowFeatures) -> Optional[ScoredFlow]:
         return self._store.get(self._key(features))

@@ -64,7 +64,7 @@ def _parse_pcap(path: str) -> List[PacketRecord]:
     elif magic == 0xD4C3B2A1:
         endian = ">"
     else:
-        logger.error("Unrecognised PCAP magic number in %s", path)
+        logger.error("Unrecognized PCAP magic number in %s", path)
         return records
 
     link_type = struct.unpack_from(f"{endian}I", raw, 20)[0]
@@ -304,10 +304,8 @@ class PCAPAnnotator:
 
     def _to_annotated(self, scored: ScoredFlow) -> AnnotatedFlow:
         fk = scored.features.flow_key
-        sni = scored.features.flow_key.dst_ip  # fallback
-        # Retrieve SNI from the feature object if present
-        if scored.features.has_sni:
-            sni = None  # actual SNI is not stored on FlowFeatures; use None
+        # Use the SNI hostname when available; fall back to the destination IP
+        sni: Optional[str] = scored.features.sni if scored.features.has_sni else None
         return AnnotatedFlow(
             src_ip=fk.src_ip,
             dst_ip=fk.dst_ip,
@@ -319,7 +317,7 @@ class PCAPAnnotator:
             risk_score=scored.risk_score,
             risk_label=scored.risk_label,
             anomaly_flag=scored.anomaly_flag,
-            sni=None,
+            sni=sni,
             flow_duration=scored.features.flow_duration,
         )
 

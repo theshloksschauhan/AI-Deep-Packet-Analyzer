@@ -133,6 +133,8 @@ class FlowFeatures:
     has_sni: int = 0
     # Entropy of the SNI hostname (0 if absent)
     sni_entropy: float = 0.0
+    # The first SNI hostname observed in the flow (not used as an ML feature)
+    sni: Optional[str] = None
 
     def to_vector(self) -> List[float]:
         """Return feature vector as a plain list (excludes flow_key)."""
@@ -294,6 +296,7 @@ class FeatureExtractor:
         sni_values = [p.sni for p in packets if p.sni]
         if sni_values:
             f.has_sni = 1
+            f.sni = sni_values[0]
             f.sni_entropy = _string_entropy(sni_values[0])
 
         return f
