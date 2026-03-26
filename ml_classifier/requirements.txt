@@ -1,0 +1,25 @@
+# Python dependencies for the ml_classifier module
+# Install with: pip install -r ml_classifier/requirements.txt
+
+# Core ML & numerical computing
+scikit-learn>=1.3.0
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Report generation
+jinja2>=3.1.0
+
+# Jupyter notebook support (optional, for model_evaluation.ipynb)
+jupyter>=1.0.0
+notebook>=7.0.0
+ipykernel>=6.0.0
+
+# Visualisation (used in the Jupyter notebook)
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# PCAP processing (optional — module falls back to built-in parser if absent)
+# dpkt>=1.9.8
+
+# YAML configuration support
+pyyaml>=6.0
