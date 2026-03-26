@@ -1,0 +1,38 @@
+# ml_classifier/config.yaml
+# Configuration for the AI anomaly-scoring layer.
+# Edit these values to tune the model for your traffic baseline.
+
+model:
+  # Isolation Forest hyperparameters
+  contamination: 0.05       # Expected anomaly fraction (0 < x < 0.5)
+  n_estimators: 100         # Number of trees in the forest
+  random_state: 42          # RNG seed for reproducibility
+  # Path to save / load the trained model
+  model_path: "models/isolation_forest.pkl"
+
+scoring:
+  # Risk score band thresholds (0–100 scale)
+  normal_max: 30            # Scores ≤ this are labelled "normal"
+  suspicious_max: 70        # Scores ≤ this (but > normal_max) are "suspicious"
+                            # Scores > suspicious_max are labelled "critical"
+
+feature_extraction:
+  # Minimum number of packets required to compute flow-level features
+  min_packets_per_flow: 1
+  # Ephemeral port threshold
+  ephemeral_port_min: 49152
+
+reporting:
+  # Output directory for generated reports
+  output_dir: "reports"
+  # Report filename templates (relative to output_dir)
+  json_report: "annotated_report.json"
+  html_dashboard: "anomaly_dashboard.html"
+
+pipeline:
+  # Prediction cache size (number of flows to cache in memory)
+  cache_size: 10000
+  # Scoring mode: "batch" or "realtime"
+  mode: "batch"
+  # Log level: DEBUG, INFO, WARNING, ERROR
+  log_level: "INFO"
